@@ -47,17 +47,20 @@ export default function App() {
 
     // Keyboard buttons
 
-    const keyboardElements = alphabet.split('').map((letter, index) => (
-        <button
-            key={index}
-            className={` bg-[#FCBA29] w-10 h-10 border border-[#D7D7D7] rounded-sm font-semibold text-base cursor-pointer disabled:opacity-25 disabled:cursor-not-allowed `}
-            disabled={isGameOver}
-            onClick={(e) => {
-                addLetter(letter);
-                changeKeyColor(e, letter);
-            }}
-        >{letter.toUpperCase()}</button>
-    ));
+    const keyboardElements = alphabet.split('').map((letter, index) => {
+        const isGuessed = guessedLetters.includes(letter);
+        const isCorrect = isGuessed && currentWord.includes(letter);
+        return (
+            <button
+                key={index}
+                className={` ${isGuessed ? (isCorrect ? "bg-key-right" : "bg-key-wrong") : "bg-[#FCBA29]"} w-10 h-10 border border-[#D7D7D7] rounded-sm font-semibold text-base cursor-pointer disabled:opacity-25 disabled:cursor-not-allowed `}
+                disabled={isGameOver}
+                onClick={(e) => {
+                    addLetter(letter);
+                    changeKeyColor(e, letter);
+                }}
+            >{letter.toUpperCase()}</button>
+        )});
 
     // Languages chips
     const languagesChips = languages.map((lang, index) => (
@@ -108,7 +111,10 @@ export default function App() {
         }
     }
 
-    // console.log(languages[wrongGuessCount-1].name);
+    function startNewGame() {
+        setCurrentWord(getRandomWord());
+        setGuessedLetters([]);
+    }
 
     return (
         <main className=" flex items-center flex-col mt-15 ">
@@ -128,9 +134,13 @@ export default function App() {
             <div className=" mt-14 flex flex-wrap justify-center gap-2 w-120 ">
                 {keyboardElements}
             </div>
-            {isGameOver && <div className=" bg-[#11B5E5] w-57 h-10 flex items-center justify-center border border-[#D7D7D7] rounded-sm font-semibold mt-10 cursor-pointer ">
-                New Game
-            </div>}
+            {isGameOver && 
+                <button 
+                    onClick={startNewGame} 
+                    className=" bg-[#11B5E5] w-57 h-10 flex items-center justify-center border border-[#D7D7D7] rounded-sm font-semibold mt-10 cursor-pointer "
+                    >New Game
+                </button>
+            }
         </main>
     )
 }

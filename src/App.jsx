@@ -2,15 +2,19 @@ import { useState } from "react";
 import { languages } from "./languages"
 
 export default function App() {
-    // Current word to guess
-    const [currentWord, setCurrentWord] = useState("java");
+    // State Values
 
-    const wordletters = currentWord.split('').map((letter, index) => (
-        <span key={index} className=" w-10 h-10 bg-[#323232] flex justify-center items-center border-b border-b-[#F9F4DA] text-[#F9F4DA] font-bold text-lg ">{letter.toUpperCase()}</span>
-    ));
+    // Current word to guess
+    const [currentWord, setCurrentWord] = useState("javascript");
 
     // User's guessed letters
     const [guessedLetters, setGuessedLetters] = useState([]);
+
+    // Derived Values
+
+
+    // Static Values
+    const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
     function addLetter(letter) {
         setGuessedLetters(prevLetters => (
@@ -26,8 +30,16 @@ export default function App() {
             e.target.classList.add("bg-key-wrong")
     }
 
+
+    const wordletters = currentWord.split('').map((letter, index) => (
+        <span 
+            key={index} 
+            className=" w-10 h-10 bg-[#323232] flex justify-center items-center border-b border-b-[#F9F4DA] text-[#F9F4DA] font-bold text-lg "
+        >{guessedLetters.includes(letter) && letter.toUpperCase()}</span>
+    ));
+
+
     // Keyboard buttons
-    const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
     const keyboardElements = alphabet.split('').map((letter, index) => (
         <button

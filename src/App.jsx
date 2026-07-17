@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { languages } from "./languages"
+import { getFarewellText } from "./utils";
 
 export default function App() {
     // State Values
@@ -14,6 +15,8 @@ export default function App() {
     const isGameWon = currentWord.split('').every(letter => guessedLetters.includes(letter));
     const isGameLost = wrongGuessCount >= languages.length-1;
     const isGameOver = isGameWon || isGameLost;
+    const lastLetter = guessedLetters.length > 0 ? guessedLetters[guessedLetters.length - 1] : null;
+    const isLastElementWrong = !currentWord.split('').includes(lastLetter);
 
     // Static Values
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -65,6 +68,46 @@ export default function App() {
         >{lang.name}</span>
     ));
 
+    function displayStatusBadge() {
+        if (isGameOver) {
+            if (isGameWon) {
+                return (
+                    <div className=" bg-key-right text-[#F9F4DA] font-medium text-center w-88 rounded-sm py-1 ">
+                        <h2 className=" text-xl ">You win!</h2>
+                        <p className=" text-sm ">Well done! 🎉</p>
+                    </div>
+                );
+            } else {
+                return (
+                    <div className=" bg-key-wrong text-[#F9F4DA] font-medium text-center w-88 rounded-sm py-1 ">
+                        <h2 className=" text-xl ">Game over!</h2>
+                        <p className=" text-sm ">You lose! Better start learning Assembly 😭</p>
+                    </div>
+                );
+            }
+        } else {
+            if (lastLetter === null) {
+                return (
+                    <div className="h-14"></div>
+                );
+            }
+            
+            if (isLastElementWrong) {
+                return (
+                    <div className=" bg-[#7A5EA7] h-14 text-[#F9F4DA] w-88 border border-dashed rounded-sm py-1 flex justify-center items-center ">
+                        <p className=" font-normal italic ">"{getFarewellText(languages[wrongGuessCount-1].name)}"🫡</p>
+                    </div>
+                );
+            } else {
+                return (
+                    <div className="h-14"></div>
+                );
+            }
+        }
+    }
+
+    // console.log(languages[wrongGuessCount-1].name);
+
     return (
         <main className=" flex items-center flex-col mt-15 ">
             <div className=" text-center ">
@@ -72,19 +115,7 @@ export default function App() {
                 <p className=" font-medium text-sm text-[#8E8E8E] max-w-88 ">Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
             </div>
             <div className=" mt-5 ">
-                {
-                    isGameOver ? 
-                        isGameWon ? 
-                            <div className=" bg-key-right text-[#F9F4DA] font-medium text-center w-88 rounded-sm py-1 ">
-                                <h2 className=" text-xl ">You win!</h2>
-                                <p className=" text-sm ">Well done! 🎉</p>
-                            </div> :
-                            <div className=" bg-key-wrong text-[#F9F4DA] font-medium text-center w-88 rounded-sm py-1 ">
-                                <h2 className=" text-xl ">Game over!</h2>
-                                <p className=" text-sm ">You lose! Better start learning Assembly 😭</p>
-                            </div>
-                    : <div className="h-14"></div>
-                }
+                {displayStatusBadge()}
             </div>
             <div className=" flex flex-wrap max-w-66.5 gap-0.5 justify-center mt-10 ">
                 {languagesChips}

@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { languages } from "./languages"
 import { getFarewellText } from "./utils";
+import { getRandomWord } from "./utils";
 
 export default function App() {
     // State Values
     // Current word to guess
-    const [currentWord, setCurrentWord] = useState("react");
+    const [currentWord, setCurrentWord] = useState(() => getRandomWord());
 
     // User's guessed letters
     const [guessedLetters, setGuessedLetters] = useState([]);

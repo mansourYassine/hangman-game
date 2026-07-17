@@ -3,15 +3,17 @@ import { languages } from "./languages"
 
 export default function App() {
     // State Values
-
     // Current word to guess
-    const [currentWord, setCurrentWord] = useState("javascript");
+    const [currentWord, setCurrentWord] = useState("react");
 
     // User's guessed letters
     const [guessedLetters, setGuessedLetters] = useState([]);
 
     // Derived Values
     const wrongGuessCount = guessedLetters.filter(l => !currentWord.includes(l)).length;
+    const isGameWon = currentWord.split('').every(letter => guessedLetters.includes(letter));
+    const isGameLost = wrongGuessCount >= languages.length-1;
+    const isGameOver = isGameWon || isGameLost;
 
     // Static Values
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -82,9 +84,9 @@ export default function App() {
             <div className=" mt-14 flex flex-wrap justify-center gap-2 w-120 ">
                 {keyboardElements}
             </div>
-            <div className=" bg-[#11B5E5] w-57 h-10 flex items-center justify-center border border-[#D7D7D7] rounded-sm font-semibold mt-10 cursor-pointer ">
+            {isGameOver && <div className=" bg-[#11B5E5] w-57 h-10 flex items-center justify-center border border-[#D7D7D7] rounded-sm font-semibold mt-10 cursor-pointer ">
                 New Game
-            </div>
+            </div>}
         </main>
     )
 }

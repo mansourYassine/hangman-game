@@ -11,7 +11,7 @@ export default function App() {
     const [guessedLetters, setGuessedLetters] = useState([]);
 
     // Derived Values
-
+    const wrongGuessCount = guessedLetters.filter(l => !currentWord.includes(l)).length;
 
     // Static Values
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -59,7 +59,7 @@ export default function App() {
             style={
                 { backgroundColor: lang.backgroundColor, color: lang.color }
             }
-            className={" rounded-sm p-1 font-bold text-[12px] "}
+            className={` rounded-sm p-1 font-bold text-[12px] relative ${ wrongGuessCount > index && "before:content-['💀'] before:absolute before:flex before:justify-center before:items-center before:w-full before:h-full before:top-0 before:left-0 before:text-[0.85rem] before:bg-[rgba(0,0,0,0.7)]"} `}
         >{lang.name}</span>
     ));
 

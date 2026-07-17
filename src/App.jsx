@@ -37,12 +37,23 @@ export default function App() {
     }
 
 
-    const wordletters = currentWord.split('').map((letter, index) => (
-        <span 
-            key={index} 
-            className=" w-10 h-10 bg-[#323232] flex justify-center items-center border-b border-b-[#F9F4DA] text-[#F9F4DA] font-bold text-lg "
-        >{guessedLetters.includes(letter) && letter.toUpperCase()}</span>
-    ));
+    const wordletters = currentWord.split('').map((letter, index) => {
+        if (isGameOver && isGameLost) {
+            return (
+                <span 
+                    key={index} 
+                    className={` ${guessedLetters.includes(letter) ? "text-[#F9F4DA]" : "text-key-wrong"} w-10 h-10 bg-[#323232] flex justify-center items-center border-b border-b-[#F9F4DA] font-bold text-lg `}
+                >{letter.toUpperCase()}</span>
+            );
+        }
+
+        return (
+            <span 
+                key={index} 
+                className=" w-10 h-10 bg-[#323232] flex justify-center items-center border-b border-b-[#F9F4DA] text-[#F9F4DA] font-bold text-lg "
+            >{guessedLetters.includes(letter) && letter.toUpperCase()}</span>
+        );
+    });
 
 
     // Keyboard buttons

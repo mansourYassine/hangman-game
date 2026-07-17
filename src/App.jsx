@@ -49,7 +49,8 @@ export default function App() {
     const keyboardElements = alphabet.split('').map((letter, index) => (
         <button
             key={index}
-            className=" bg-[#FCBA29] w-10 h-10 border border-[#D7D7D7] rounded-sm font-semibold text-base cursor-pointer "
+            className={` bg-[#FCBA29] w-10 h-10 border border-[#D7D7D7] rounded-sm font-semibold text-base cursor-pointer disabled:opacity-25 disabled:cursor-not-allowed `}
+            disabled={isGameOver}
             onClick={(e) => {
                 addLetter(letter);
                 changeKeyColor(e, letter);

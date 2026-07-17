@@ -2,6 +2,7 @@ import { useState } from "react";
 import { languages } from "./languages"
 import { getFarewellText } from "./utils";
 import { getRandomWord } from "./utils";
+import Confetti from "react-confetti";
 
 export default function App() {
     // State Values
@@ -129,6 +130,7 @@ export default function App() {
 
     return (
         <main className=" flex items-center flex-col mt-15 ">
+            {isGameWon && <Confetti />}
             <div className=" text-center ">
                 <h1 className=" font-medium text-xl text-[#F9F4DA] ">Assembly: Endgame</h1>
                 <p className=" font-medium text-sm text-[#8E8E8E] max-w-88 ">Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>

@@ -3,7 +3,7 @@ import { languages } from "./languages"
 
 export default function App() {
     // Current word to guess
-    const [currentWord, setCurrentWord] = useState("react");
+    const [currentWord, setCurrentWord] = useState("java");
 
     const wordletters = currentWord.split('').map((letter, index) => (
         <span key={index} className=" w-10 h-10 bg-[#323232] flex justify-center items-center border-b border-b-[#F9F4DA] text-[#F9F4DA] font-bold text-lg ">{letter.toUpperCase()}</span>
@@ -12,6 +12,20 @@ export default function App() {
     // User's guessed letters
     const [guessedLetters, setGuessedLetters] = useState([]);
 
+    function addLetter(letter) {
+        setGuessedLetters(prevLetters => (
+            prevLetters.includes(letter) ? 
+                prevLetters : 
+                [...prevLetters, letter]
+        ));
+    }
+
+    function changeKeyColor(e, letter) {
+        currentWord.includes(letter) ?
+            e.target.classList.add("bg-key-right") :
+            e.target.classList.add("bg-key-wrong")
+    }
+
     // Keyboard buttons
     const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
@@ -19,12 +33,9 @@ export default function App() {
         <button
             key={index}
             className=" bg-[#FCBA29] w-10 h-10 border border-[#D7D7D7] rounded-sm font-semibold text-base cursor-pointer "
-            onClick={() => {
-                setGuessedLetters(prevLetters => (
-                    prevLetters.includes(letter) ? 
-                        prevLetters : 
-                        [...prevLetters, letter]
-                ));
+            onClick={(e) => {
+                addLetter(letter);
+                changeKeyColor(e, letter);
             }}
         >{letter.toUpperCase()}</button>
     ));

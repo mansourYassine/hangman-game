@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+@theme {
+    --color-key-right: #10A95B;
+    --color-key-wrong: #EC5D49;
+}

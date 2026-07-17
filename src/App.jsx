@@ -47,6 +47,9 @@ export default function App() {
             <div className=" mt-14 flex flex-wrap justify-center gap-2 w-120 ">
                 {keyboardElements}
             </div>
+            <div className=" bg-[#11B5E5] w-57 h-10 flex items-center justify-center border border-[#D7D7D7] rounded-sm font-semibold mt-10 cursor-pointer ">
+                New Game
+            </div>
         </main>
     )
 }
